@@ -1,0 +1,77 @@
+package com.staff;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.security.RunAs;
+
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.staff.exception.StaffNotFoundException;
+import com.staff.model.Staff;
+import com.staff.repository.StaffRepository;
+import com.staff.service.StaffServiceImpl;
+
+@SpringBootTest
+class StaffServiceApplicationTests {
+
+	@Autowired
+	private StaffServiceImpl service;
+
+	@MockBean
+	private StaffRepository staffRepo;
+
+	@Test
+	public void showAllStaffDetailsTest() throws StaffNotFoundException {
+		when(staffRepo.findAll()).thenReturn(
+				(List<Staff>) Stream.of(new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000))
+						.collect(Collectors.toList()));
+		assertEquals(1, service.showAllStaffDetails().size());
+	}
+   
+	@Test
+	public void showStaffByIdTest()throws StaffNotFoundException{
+		Staff s= new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+		 Optional<Staff> staff = Optional.of(s);
+		 when(staffRepo.findById(1)).thenReturn(staff);
+	        assertEquals(s, service.showStaffById(1));
+	    }
+	
+	@Test
+	public void addStaffDetailsTest() throws StaffNotFoundException {
+		Staff staff = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+		when(staffRepo.insert(staff)).thenReturn(staff);
+		assertEquals(staff, service.addStaffDetails(staff));
+	}
+
+	@Test
+	public void updateStaffDetailsTest() throws StaffNotFoundException {
+		Staff s1 = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+		Staff s2 = new Staff(1, 102, "Abi", 987652338, "abi@gmail.com", 22, "trichy", 14000);
+		Optional<Staff> staff = Optional.of(s1);
+		when(staffRepo.findById(1)).thenReturn(staff);
+		when(staffRepo.save(s2)).thenReturn(s2);
+		assertEquals(s2, service.updateStaffDetails(s2));
+	}
+	
+	@Test
+	public void deleteStaffDetailsTest() throws StaffNotFoundException{
+		Staff s= new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+		 Optional<Staff> staff = Optional.of(s);
+		 when(staffRepo.findById(1)).thenReturn(staff);
+		 assertEquals("Staff with the 1 Deleted Successfully", service.deleteStaffDetails(1));
+		
+	}
+
+}

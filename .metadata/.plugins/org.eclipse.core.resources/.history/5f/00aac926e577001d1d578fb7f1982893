@@ -1,0 +1,34 @@
+package com.paymentservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class PaypalController {
+   
+	@Autowired
+	PaypalService service;
+	
+	@GetMapping("/")
+	public String home() {
+		return "home";
+	}
+	
+	@PostMapping("/pay")
+	public String payment(@ModelAttribute("order") Order order) {
+		 try {
+	            Payment payment = service.createPayment(order.getPrice(),order.getCurrency(),order.getMethod(),
+	                    order.getIntent(), order.getDescription(),"http://localhost:9000/"+CANCEL_URL,
+	                    "http://localhost:9010/"+SUCCESS_URL);
+	            for(Links link:payment.getLinks()) {
+	                if(link.getRel().equals("approval_url")) {
+	                    return "redirect:"+link.getHref();
+	            }
+		
+		
+	}
+	
+}

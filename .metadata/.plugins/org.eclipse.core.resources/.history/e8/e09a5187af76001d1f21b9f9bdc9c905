@@ -1,0 +1,36 @@
+package com.guestservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class GuestServiceTest {
+
+}
+
+
+
+
+   @Autowired
+    private CropController service;
+    
+
+
+
+   @MockBean
+    private CropRepository croprepo;
+    
+    @Test
+    void addcropTest() {
+        Crop crop = new Crop(111,"abcc","organic","5kg",null,"500");
+        when(croprepo.save(crop)).thenReturn(crop);
+        Crop res =service.addcrop(crop);
+        assertEquals(crop.getId(),res.getId());
+    }

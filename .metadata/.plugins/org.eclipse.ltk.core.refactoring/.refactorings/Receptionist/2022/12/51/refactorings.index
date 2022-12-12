@@ -1,0 +1,18 @@
+1670742736978	Rename type 'GuestDetailsController'
+1670746115465	Rename type 'RoomManagerController'
+1670746414529	Delete element
+1670756841538	Copy compilation unit
+1670756860470	Copy compilation unit
+1670761251797	Delete element
+1670761271188	Rename type 'GuestReceptionistController'
+1670761452977	Rename type 'ReservationOwnerController'
+1670761706081	Delete element
+1670763099490	Rename type 'GuestAuthenticationService'
+1670763136276	Rename type 'GuestDetailsReceptionistController'
+1670763150596	Rename type 'ReservationAuthenticationService'
+1670763187792	Rename type 'RoomAuthenticationService'
+1670763328237	Rename type 'GuestAuthenticationClient'
+1670763339254	Rename type 'ReservationAuthenticationClient'
+1670763360380	Rename type 'RoomAuthenticationClient'
+1670769163137	Delete elements
+1670769292624	Delete elements

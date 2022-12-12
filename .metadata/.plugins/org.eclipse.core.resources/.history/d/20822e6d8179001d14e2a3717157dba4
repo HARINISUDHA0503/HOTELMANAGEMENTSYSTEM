@@ -1,0 +1,81 @@
+package com.rate.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+
+import com.rate.service.exception.RateNotFoundException;
+import com.rate.service.model.RateDetails;
+import com.rate.service.repository.RateRepository;
+import com.rate.service.service.RateServiceImplementation;
+
+
+
+
+@SpringBootTest
+class RateServiceApplicationTests {
+
+	@Autowired
+	private RateServiceImplementation service;
+
+	@MockBean
+	private RateRepository repository;
+    
+	  @Test
+		public void showAllRateDetailsTest() throws RateNotFoundException {
+		  List<RateDetails> ratedetails = new ArrayList<>();
+		  RateDetails rate = new RateDetails(1, 1000,200);
+		  when(repository.findAll()).thenReturn(ratedetails);
+	      assertEquals(1,service.showAllRateDetails().size());
+		    }
+		     
+	  @Test
+		public void showRateByIdTest() throws RateNotFoundException {
+		  RateDetails r = new RateDetails(1, 1000,200);
+			Optional<RateDetails> rate = Optional.of(r);
+			when(repository.findById(1)).thenReturn(rate);
+			assertEquals(r, service.showRateById(1));
+		}
+		    @Test
+			public void addRateDetailsTest() throws RateNotFoundException{
+		    	RateDetails rate=new  RateDetails(1, 1000,200);
+				  when(repository.insert(rate)).thenReturn(rate);
+				  assertEquals(rate, service.addRateDetails(rate));
+			  }
+		    
+		    @Test
+			public void updateRateDetailsTest() throws RateNotFoundException {
+		    	RateDetails r1 = new  RateDetails(1, 1000,200);
+		    	RateDetails r2 = new   RateDetails(2, 1000,200);
+				Optional<RateDetails> guest = Optional.of(r1);
+				when(repository.findById(1)).thenReturn(guest);
+				when(repository.save(r2)).thenReturn(r2);
+				assertEquals(r2, service.updateRateDetails(r2));
+			}
+			
+			@Test
+			public void deleteRateDetailsTest() throws RateNotFoundException{
+				RateDetails r= new  RateDetails(1, 1000,200);
+				 Optional<RateDetails> rate = Optional.of(r);
+				 when(repository.findById(1)).thenReturn(rate);
+				 assertEquals("Rate with the 1 Deleted Successfully!", service.deleteRateDetails(1));
+				
+			} 
+	    
+
+}

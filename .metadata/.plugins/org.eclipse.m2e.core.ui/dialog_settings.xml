@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\Receptionist"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\Authentication"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\Owner"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\ReservationService"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\ManagerEndUser"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\GuestService"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\Staff-Service"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\RoomService"/>
+			<item value="C:\Users\hs21\Downloads\sts-4.16.1.RELEASE\HotelManagementSystem\InventoryService"/>
+			<item value="C:\Users\hs21\Downloads\RoomService"/>
+			<item value="C:\Users\hs21\Downloads\InventoryService"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+</section>

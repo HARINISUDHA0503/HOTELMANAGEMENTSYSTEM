@@ -1,0 +1,17 @@
+server.port=3002
+spring.application.name=room-service
+
+
+#Db Config
+spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration 
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=RoomManagement
+spring.data.mongodb.username=
+spring.data.mongodb.password=
+spring.data.mongodb.uri=mongodb+srv://hari:hari@cluster0.vdcdels.mongodb.net/?retryWrites=true&w=majority
+spring.jpa.hibernate.ddl-auto=update
+
+#logger Config
+logging.level.org.springframework=info 
+logging.level.com.rooms=debug
