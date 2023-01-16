@@ -20,54 +20,107 @@ import com.guestservice.service.GuestDetailsService;
 
 @SpringBootTest
 class GuestServiceApplicationTests {
-
 	@Autowired
 	private GuestDetailsService guestService;
 
 	@MockBean
 	private GuestDetailsRepository guestDetailsRepository;
 
-
 	@Test
-	public void showAllGuestDetailsTest() throws GuestNotFoundException {
-		List<GuestDetails> guestDetails = new ArrayList<>();
-		GuestDetails g = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
-		guestDetails.add(g);
-		when(guestDetailsRepository.findAll()).thenReturn(guestDetails);
+	public void ShowAllGuestTest() throws GuestNotFoundException {
+		List<GuestDetails> guestdetails = new ArrayList<>();
+
+		GuestDetails g = new GuestDetails();
+
+		g.setGuestId(1);
+		g.setName("Pravalika");
+		g.setContact("97826735");
+		g.setGender("f");
+		g.setEmail("pravalika@gmail.com");
+		g.setAddress("Waranagl");
+
+		guestdetails.add(g);
+
+		when(guestDetailsRepository.findAll()).thenReturn(guestdetails);
 		assertEquals(1, guestService.showAllGuestDetails().size());
 	}
+
 	@Test
-	public void showGuestByIdTest() throws GuestNotFoundException {
-		GuestDetails g = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
+	public void ShowGuestByIdTest() throws GuestNotFoundException {
+		GuestDetails g = new GuestDetails();
+
+		g.setGuestId(1);
+		g.setName("Pravalika");
+		g.setContact("97826735");
+		g.setGender("f");
+		g.setEmail("pravalika@gmail.com");
+		g.setAddress("Waranagl");
+
 		Optional<GuestDetails> guest = Optional.of(g);
+
 		when(guestDetailsRepository.findById(1)).thenReturn(guest);
-		assertEquals(g, guestService. showGuestById(1));
+		assertEquals(g, guestService.showGuestById(1));
 	}
 
 	@Test
-	public void addGuestDetailsTest() throws GuestNotFoundException {
-		GuestDetails guest = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
-		when(guestDetailsRepository.insert(guest)).thenReturn(guest);
-		assertEquals(guest, guestService.addGuestDetails(guest));
+	public void addGuestTest() throws GuestNotFoundException {
+
+		GuestDetails g = new GuestDetails();
+
+		g.setGuestId(1);
+		g.setName("Pravalika");
+		g.setContact("97826735");
+		g.setGender("f");
+		g.setEmail("pravalika@gmail.com");
+		g.setAddress("Waranagl");
+
+		when(guestDetailsRepository.insert(g)).thenReturn(g);
+		assertEquals(g, guestService.addGuestDetails(g));
 	}
 
 	@Test
-	public void updateGuestDetailsTest() throws GuestNotFoundException {
-		GuestDetails g1 = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
-		GuestDetails g2 = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
+	public void updateFarmerTest() throws GuestNotFoundException {
+		GuestDetails g1 = new GuestDetails();
+		GuestDetails g2 = new GuestDetails();
+
+		g1.setGuestId(1);
+		g1.setName("Pravalika");
+		g1.setContact("97826735");
+		g1.setGender("f");
+		g1.setEmail("pravalika@gmail.com");
+		g1.setAddress("Waranagl");
+
+		g2.setGuestId(1);
+		g2.setName("Pravalika");
+		g2.setContact("97826735");
+		g2.setGender("f");
+		g2.setEmail("pravalika@gmail.com");
+		g2.setAddress("Waranagl");
+
 		Optional<GuestDetails> guest = Optional.of(g1);
+
 		when(guestDetailsRepository.findById(1)).thenReturn(guest);
 		when(guestDetailsRepository.save(g2)).thenReturn(g2);
 		assertEquals(g2, guestService.updateGuestDetails(g2));
 	}
 
 	@Test
-	public void deleteGuestDetailsTest() throws GuestNotFoundException {
-		GuestDetails g = new GuestDetails(1, "Harini", "877532352", "F", "harini@gmail.com", "trichy");
+	public void deleteGuestTest() throws GuestNotFoundException {
+		GuestDetails g = new GuestDetails();
+
+		g.setGuestId(1);
+		g.setName("Pravalika");
+		g.setContact("97826735");
+		g.setGender("f");
+		g.setEmail("pravalika@gmail.com");
+		g.setAddress("Waranagl");
+
 		Optional<GuestDetails> guest = Optional.of(g);
 		when(guestDetailsRepository.findById(1)).thenReturn(guest);
 		assertEquals("Guest with the 1 Deleted Successfully!", guestService.deleteGuestDetails(1));
-
 	}
+
+
+	
 
 }

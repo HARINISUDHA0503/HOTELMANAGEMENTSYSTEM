@@ -26,10 +26,7 @@ public class MyUserDetailsService implements UserDetailsService
 		
 		
 		return user.map(MyUserDetailsImpl:: new).get();
-		
-		
-		
-	}
+		}
 
 	public User loadByUserRole(String username) {
 		Optional<User> user=repo.findByUserName(username);

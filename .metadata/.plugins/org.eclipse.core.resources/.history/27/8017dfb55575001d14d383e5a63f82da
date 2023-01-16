@@ -1,6 +1,0 @@
-server.port=3000
-server.application.name=API-Gateway
-
-spring.cloud.gateway.routes[0].id=inventory-service
-spring.cloud.gateway.routes[0].uri=http://localhost:3001
-spring.cloud.gateway.routes[0].predicates[0]=Path=/inventory/**

@@ -15,6 +15,11 @@ public class Staff {
 	private String employeeAddress;
 	private int salary;
 
+	public Staff() {
+		super();
+
+	}
+	
 	public Staff(int id, int departmentId, String employeeName, String phoneNo, String email, int age,
 			String employeeAddress, int salary) {
 		super();
@@ -26,11 +31,6 @@ public class Staff {
 		this.age = age;
 		this.employeeAddress = employeeAddress;
 		this.salary = salary;
-	}
-
-	public Staff() {
-		super();
-
 	}
 
 	public int getId() {

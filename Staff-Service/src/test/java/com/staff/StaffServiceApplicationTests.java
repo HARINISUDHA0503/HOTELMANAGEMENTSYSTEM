@@ -1,23 +1,16 @@
 package com.staff;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.security.RunAs;
 
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.staff.exception.StaffNotFoundException;
 import com.staff.model.Staff;
@@ -26,54 +19,118 @@ import com.staff.service.StaffServiceImpl;
 
 @SpringBootTest
 class StaffServiceApplicationTests {
-
 	@Autowired
 	private StaffServiceImpl service;
 
 	@MockBean
-	private StaffRepository staffRepo;
+	private StaffRepository staffRepository;
 
 	@Test
-	public void showAllStaffDetailsTest() throws StaffNotFoundException {
+	public void ShowAllStaffTest() {
 		List<Staff> staff = new ArrayList<>();
-		Staff s = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+		Staff s = new Staff();
+
+		s.setId(1);
+		s.setDepartmentId(122);
+		s.setEmployeeName("Vasavi");
+		s.setPhoneNo("7812883396");
+		s.setEmail("vasavi@gmail.com");
+		s.setAge(20);
+		s.setEmployeeAddress("Perungudi,Chennai");
+		s.setSalary(50000);
+
 		staff.add(s);
-		when(staffRepo.findAll()).thenReturn(staff);
+
+		when(staffRepository.findAll()).thenReturn(staff);
 		assertEquals(1, service.showAllStaffDetails().size());
 	}
 
 	@Test
-	public void showStaffByIdTest() throws StaffNotFoundException {
-		Staff s = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+	public void ShowStaffById() throws StaffNotFoundException {
+
+		Staff s = new Staff();
+
+		s.setId(1);
+		s.setDepartmentId(122);
+		s.setEmployeeName("Vasavi");
+		s.setPhoneNo("7812883396");
+		s.setEmail("vasavi@gmail.com");
+		s.setAge(45);
+		s.setEmployeeAddress("Perungudi,Chennai");
+		s.setSalary(50000);
+
 		Optional<Staff> staff = Optional.of(s);
-		when(staffRepo.findById(1)).thenReturn(staff);
+		when(staffRepository.findById(1)).thenReturn(staff);
 		assertEquals(s, service.showStaffById(1));
+
 	}
 
 	@Test
-	public void addStaffDetailsTest() throws StaffNotFoundException {
-		Staff staff = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
-		when(staffRepo.insert(staff)).thenReturn(staff);
-		assertEquals(staff, service.addStaffDetails(staff));
+	public void addStaffTest() throws StaffNotFoundException {
+
+		Staff s = new Staff();
+
+		s.setId(1);
+		s.setDepartmentId(122);
+		s.setEmployeeName("Vasavi");
+		s.setPhoneNo("7812883396");
+		s.setEmail("vasavi@gmail.com");
+		s.setAge(45);
+		s.setEmployeeAddress("Perungudi,Chennai");
+		s.setSalary(50000);
+
+		when(staffRepository.insert(s)).thenReturn(s);
+		assertEquals(s, service.addStaffDetails(s));
 	}
 
 	@Test
-	public void updateStaffDetailsTest() throws StaffNotFoundException {
-		Staff s1 = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
-		Staff s2 = new Staff(1, 102, "Abi", 987652338, "abi@gmail.com", 22, "trichy", 14000);
+	public void updateStaffTest() throws StaffNotFoundException {
+
+		Staff s1 = new Staff();
+		Staff s2 = new Staff();
+
+		s1.setId(1);
+		s1.setDepartmentId(122);
+		s1.setEmployeeName("Vasavi");
+		s1.setPhoneNo("7812883396");
+		s1.setEmail("vasavi@gmail.com");
+		s1.setAge(45);
+		s1.setEmployeeAddress("Perungudi,Chennai");
+		s1.setSalary(50000);
+
+		s2.setId(1);
+		s2.setDepartmentId(122);
+		s2.setEmployeeName("Vasavi");
+		s2.setPhoneNo("7812883396");
+		s2.setEmail("vasavi@gmail.com");
+		s2.setAge(45);
+		s2.setEmployeeAddress("Perungudi,Chennai");
+		s2.setSalary(50000);
+
 		Optional<Staff> staff = Optional.of(s1);
-		when(staffRepo.findById(1)).thenReturn(staff);
-		when(staffRepo.save(s2)).thenReturn(s2);
+
+		when(staffRepository.findById(1)).thenReturn(staff);
+		when(staffRepository.save(s2)).thenReturn(s2);
 		assertEquals(s2, service.updateStaffDetails(s2));
 	}
 
 	@Test
-	public void deleteStaffDetailsTest() throws StaffNotFoundException {
-		Staff s = new Staff(1, 101, "Hari", 987652738, "hari@gmail.com", 20, "ooty", 12000);
+	public void deleteStaffTest() throws StaffNotFoundException {
+
+		Staff s = new Staff();
+
+		s.setId(1);
+		s.setDepartmentId(122);
+		s.setEmployeeName("Vasavi");
+		s.setPhoneNo("7812883396");
+		s.setEmail("vasavi@gmail.com");
+		s.setAge(45);
+		s.setEmployeeAddress("Perungudi,Chennai");
+		s.setSalary(50000);
+
 		Optional<Staff> staff = Optional.of(s);
-		when(staffRepo.findById(1)).thenReturn(staff);
+		when(staffRepository.findById(1)).thenReturn(staff);
 		assertEquals("Staff with the 1 Deleted Successfully!", service.deleteStaffDetails(1));
 
 	}
-
 }

@@ -9,17 +9,18 @@ public class Staff {
 	private int id;
 	private int departmentId;
 	private String employeeName;
-	private long phoneNo;
+	private String phoneNo;
 	private String email;
 	private int age;
 	private String employeeAddress;
-	private Double salary;
+	private int salary;
+	
 	public Staff() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
-	public Staff(int id, int departmentId, String employeeName, long phoneNo, String email, int age,
-			String employeeAddress, Double salary) {
+	public Staff(int id, int departmentId, String employeeName, String phoneNo, String email, int age,
+			String employeeAddress, int salary) {
 		super();
 		this.id = id;
 		this.departmentId = departmentId;
@@ -48,10 +49,10 @@ public class Staff {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public long getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(long phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {
@@ -72,10 +73,10 @@ public class Staff {
 	public void setEmployeeAddress(String employeeAddress) {
 		this.employeeAddress = employeeAddress;
 	}
-	public Double getSalary() {
+	public int getSalary() {
 		return salary;
 	}
-	public void setSalary(Double salary) {
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
 	@Override
@@ -85,5 +86,4 @@ public class Staff {
 				+ salary + "]";
 	}
 
-	
 }

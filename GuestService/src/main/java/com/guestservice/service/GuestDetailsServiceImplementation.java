@@ -2,7 +2,6 @@ package com.guestservice.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import com.guestservice.repository.GuestDetailsRepository;
 
 @Service
 public class GuestDetailsServiceImplementation implements GuestDetailsService{
+
 	@Autowired
 	private GuestDetailsRepository guestDetailsRepository;
 	
@@ -40,7 +40,7 @@ public class GuestDetailsServiceImplementation implements GuestDetailsService{
 		log.info("Add GuestDetails Method Started");
 		Optional<GuestDetails> gd = guestDetailsRepository.findById(guestDetails.getGuestId());
 		if (!gd.isPresent()) {
-			log.info("Add CropDetails Method Ended");
+			log.info("Add GuestDetails Method Ended");
 			return guestDetailsRepository.insert(guestDetails);
 		} else {
 			return gd.orElseThrow(() -> new GuestNotFoundException("Guest Already Exists"));

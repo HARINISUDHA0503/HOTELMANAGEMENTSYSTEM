@@ -2,9 +2,7 @@ package com.owner.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.owner.exception.StaffNotFoundException;
 import com.owner.feignclient.StaffFeignClient;
 import com.owner.model.Staff;
-
 
 @RestController
 @RequestMapping("owner/staff")
@@ -28,70 +23,34 @@ import com.owner.model.Staff;
 public class StaffOwnerController {
 	@Autowired
 	private StaffFeignClient staffFeignClient;
-	@Autowired
-	private StaffAuthService staffAuthService;
 
 	@GetMapping("/all")
 	public ResponseEntity<List<Staff>> showAllStaff(@RequestHeader("Authorization") String token) {
-		try {
-			if (staffAuthService.isSessionValid(token)) {
-				return staffFeignClient.showAllStaff();
-			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return staffFeignClient.showAllStaff(token);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Staff> showRoomById(@PathVariable("id") int id, @RequestHeader("Authorization") String token)
-			throws StaffNotFoundException {
-		try {
-			if (staffAuthService.isSessionValid(token)) {
-				return staffFeignClient.showById(id);
-			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<Staff> showRoomById(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws StaffNotFoundException {
+
+		return staffFeignClient.showById(id,token);
 	}
 
 	@PostMapping("/addstaff")
-	public ResponseEntity<Staff> addStaffDetails(@RequestBody Staff staffDetails,
-			@RequestHeader("Authorization") String token) throws StaffNotFoundException {
-		try {
-			if (staffAuthService.isSessionValid(token)) {
-				return staffFeignClient.addStaff(staffDetails);
-			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<Staff> addStaffDetails(@RequestBody Staff staffDetails,@RequestHeader("Authorization") String token) throws StaffNotFoundException {
+
+		return staffFeignClient.addStaff(staffDetails,token);
 	}
 
 	@PutMapping("/updatestaff")
-	public ResponseEntity<Staff> updateStaffDetails(@RequestBody Staff staffDetails,
-			@RequestHeader("Authorization") String token) throws StaffNotFoundException {
-		try {
-			if (staffAuthService.isSessionValid(token)) {
-				return staffFeignClient.updateStaff(staffDetails);
-			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<Staff> updateStaffDetails(@RequestBody Staff staffDetails,@RequestHeader("Authorization") String token) throws StaffNotFoundException {
+		return staffFeignClient.updateStaff(staffDetails,token);
 	}
 
 	@DeleteMapping("/deletestaff/{id}")
-	public ResponseEntity<String> deleteStaffDetails(@PathVariable("id") int id,
-			@RequestHeader("Authorization") String token) throws StaffNotFoundException {
-		try {
-			if (staffAuthService.isSessionValid(token)) {
-				return staffFeignClient.deleteStaff(id);
-			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<String> deleteStaffDetails(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws StaffNotFoundException {
+
+		return staffFeignClient.deleteStaff(id,token);
 	}
+
 }

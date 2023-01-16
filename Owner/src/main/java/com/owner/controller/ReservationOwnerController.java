@@ -1,9 +1,7 @@
 package com.owner.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.owner.exception.ReservationNotFoundException;
 import com.owner.feignclient.ReservationFeignClient;
 import com.owner.model.Reservation;
@@ -26,71 +22,37 @@ public class ReservationOwnerController {
 	@Autowired
 	private ReservationFeignClient reservationClient;
 	
-	  @Autowired
-	    private ReservationAuthService reservationAuthService;
-	    
-	    @GetMapping("/all")
-	    public ResponseEntity<List<Reservation>> showAllReservation(@RequestHeader("Authorization") String token){
-	        try {
-	            if (reservationAuthService.isSessionValid(token)) {
-	             return reservationClient.showAllReservation();
-	    }
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        } catch (Exception e) {
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        }
-	    }
-	            
-	    @GetMapping("/{id}")
-	    public ResponseEntity<Reservation> showReservationById(@PathVariable("id") int id,@RequestHeader("Authorization") String token)
-	            throws ReservationNotFoundException {
-	        try {
-	            if (reservationAuthService.isSessionValid(token)) {
-	            return reservationClient.showById(id);
-	    }
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        } catch (Exception e) {
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        }
-	    }
-	            
-	    @PostMapping("/addreservation")
-	    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation,@RequestHeader("Authorization") String token)
-	            throws ReservationNotFoundException {
-	        try {
-	            if (reservationAuthService.isSessionValid(token)) {
-	        return reservationClient.addReservation(reservation);
-	    }
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        } catch (Exception e) {
-	            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	        }
-	    }
-	    @PutMapping("/updatereservation")
-	    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation,@RequestHeader("Authorization") String token)
-	            throws ReservationNotFoundException{
-	        try {
-	            if (reservationAuthService.isSessionValid(token)) {
-	        return reservationClient.updateReservation(reservation);
-	        }
-	        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	    } catch (Exception e) {
-	        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	    }
-	    }
-
-
-
-	   @DeleteMapping("/delete/{id}")
-	    public ResponseEntity<String> deleteReservation(@PathVariable("id") int id,@RequestHeader("Authorization") String token)
-	            throws ReservationNotFoundException{
-	        try {
-	            if (reservationAuthService.isSessionValid(token)) {
-	        return reservationClient.deleteReservation(id);
-	            }
-	        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	    } catch (Exception e) {
-	        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-	    }
+	@GetMapping("/roomprice/{roomType}")
+    public String getPrice(@PathVariable("roomType") String roomType,@RequestHeader("Authorization") String token) {
+            return reservationClient.getPrice(roomType,token);
+    }
+	@GetMapping("/all")
+	public ResponseEntity<List<Reservation>> showAllReservation(@RequestHeader("Authorization") String token) {
+		return reservationClient.showAllReservation(token);
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Reservation> showReservationById(@PathVariable("id") int id,@RequestHeader("Authorization") String token)
+			throws ReservationNotFoundException {
+		return reservationClient.showById(id,token);
 	}
+
+	@PostMapping("/addreservation")
+	public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation,@RequestHeader("Authorization") String token)
+			throws ReservationNotFoundException {
+		return reservationClient.addReservation(reservation,token);
+	}
+
+	@PutMapping("/updatereservation")
+	public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation,@RequestHeader("Authorization") String token)
+			throws ReservationNotFoundException {
+		return reservationClient.updateReservation(reservation,token);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteReservation(@PathVariable("id") int id,@RequestHeader("Authorization") String token) 
+			throws ReservationNotFoundException {
+		return reservationClient.deleteReservation(id,token);
+	}
+
+}

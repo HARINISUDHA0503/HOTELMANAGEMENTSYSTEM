@@ -3,6 +3,7 @@ package com.guestservice.exception;
 @SuppressWarnings("serial")
 
 public class GuestNotFoundException extends Exception {
+
 	public GuestNotFoundException() {
 		super();
 	}

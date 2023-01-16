@@ -1,4 +1,0 @@
-server.port=2000
-spring.application.name=manager-service
-spring.main.allow-bean-definition-overriding=true
-

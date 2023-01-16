@@ -1,13 +1,9 @@
 package com.owner.controller;
 
-
 import java.util.List;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,78 +14,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import com.owner.exception.GuestNotFoundException;
 import com.owner.feignclient.GuestFeignClient;
 import com.owner.model.GuestDetails;
 
-
-
 @RestController
 @RequestMapping("owner/guest")
 public class GuestOwnerController {
-	
+
 	@Autowired
 	private GuestFeignClient guestFeignClient;
-	
-	@Autowired
-	private GuestAuthService guestAuthService;
-	
-	
+
 	@GetMapping("/all")
-	public ResponseEntity<List<GuestDetails>> showAllGuest(@RequestHeader("Authorization") String token){
-		try {
-			if (guestAuthService.isSessionValid(token)) {
-	
-		return guestFeignClient.showAllGuest();
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<List<GuestDetails>> showAllGuest(@RequestHeader("Authorization") String token) {
+		return guestFeignClient.showAllGuest(token);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<GuestDetails> showGuestById(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws GuestNotFoundException {
-		try {
-			if (guestAuthService.isSessionValid(token)) {	
-		return guestFeignClient.showById(id);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+		return guestFeignClient.showById(id,token);
 	}
-	
+
 	@PostMapping("/addguest")
 	public ResponseEntity<GuestDetails> addGuest(@RequestBody GuestDetails guestDetails,@RequestHeader("Authorization") String token) throws GuestNotFoundException {
-		try {
-			if (guestAuthService.isSessionValid(token)) {	
-		return guestFeignClient.addGuest(guestDetails);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+		return guestFeignClient.addGuest(guestDetails,token);
 	}
-	
+
 	@PutMapping("/updateguest")
-	public ResponseEntity<GuestDetails> updateGuest(@RequestBody GuestDetails guestDetails,@RequestHeader("Authorization") String token) throws GuestNotFoundException{
-		try {
-			if (guestAuthService.isSessionValid(token)) {	
-		return guestFeignClient.updateGuest(guestDetails);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<GuestDetails> updateGuest(@RequestBody GuestDetails guestDetails,@RequestHeader("Authorization") String token)throws GuestNotFoundException {
+		return guestFeignClient.updateGuest(guestDetails,token);
 	}
-	
+
 	@DeleteMapping("/deleteguest/{id}")
-	public ResponseEntity<String> deleteGuest(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws GuestNotFoundException{
-		try {
-			if (guestAuthService.isSessionValid(token)) {	
-		return guestFeignClient.deleteGuest(id);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+	public ResponseEntity<String> deleteGuest(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws GuestNotFoundException {
+		return guestFeignClient.deleteGuest(id,token);
 	}
 }

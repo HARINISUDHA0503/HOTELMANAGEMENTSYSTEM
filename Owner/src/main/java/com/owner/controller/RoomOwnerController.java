@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,79 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.owner.exception.RoomNotFoundException;
 import com.owner.feignclient.RoomFeignClient;
 import com.owner.model.Room;
-
-
 
 @RestController
 @RequestMapping("owner/room")
 public class RoomOwnerController {
 	@Autowired
 	private RoomFeignClient roomFeignClient;
-	
-	@Autowired
-	private RoomAuthService  roomAuthService;
 
 	@GetMapping("/all")
 	public ResponseEntity<List<Room>> showAllRoom(@RequestHeader("Authorization") String token) {
-		try {
-			if (roomAuthService.isSessionValid(token)) {
-		return roomFeignClient.showAllRoom();
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return roomFeignClient.showAllRoom(token);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Room> showRoomById(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws RoomNotFoundException {
-		try {
-			if (roomAuthService.isSessionValid(token)) {
-		return roomFeignClient.showById(id);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return roomFeignClient.showById(id,token);
 	}
 
 	@PostMapping("/addroom")
 	public ResponseEntity<Room> addRoomDetails(@RequestBody Room roomDetails,@RequestHeader("Authorization") String token) throws RoomNotFoundException {
-		try {
-			if (roomAuthService.isSessionValid(token)) {
-		return roomFeignClient.addRoom(roomDetails);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return roomFeignClient.addRoom(roomDetails,token);
 	}
 
 	@PutMapping("/updateroom")
 	public ResponseEntity<Room> updateRoomDetails(@RequestBody Room roomDetails,@RequestHeader("Authorization") String token) throws RoomNotFoundException {
-		try {
-			if (roomAuthService.isSessionValid(token)) {
-		return roomFeignClient.updateRoom(roomDetails);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return roomFeignClient.updateRoom(roomDetails,token);
 	}
 
 	@DeleteMapping("/deleteroom/{id}")
 	public ResponseEntity<String> deleteRoomDetails(@PathVariable("id") int id,@RequestHeader("Authorization") String token) throws RoomNotFoundException {
-		try {
-			if (roomAuthService.isSessionValid(token)) {
-		return roomFeignClient.deleteRoom(id);
-	}throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are Unauthorized!...");
-		}
+
+		return roomFeignClient.deleteRoom(id,token);
 	}
-
 }
-
-	
-

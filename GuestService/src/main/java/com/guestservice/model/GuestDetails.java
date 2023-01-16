@@ -13,9 +13,10 @@ public class GuestDetails {
 	private String gender;
 	private String email;
 	private String address;
+	
 	public GuestDetails() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	public GuestDetails(int guestId, String name, String contact, String gender, String email, String address) {
 		super();

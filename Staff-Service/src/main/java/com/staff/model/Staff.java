@@ -5,11 +5,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "staff")
 public class Staff {
+	
 	@Id
 	private int id;
 	private int departmentId;
 	private String employeeName;
-	private long phoneNo;
+	private String phoneNo;
 	private String email;
 	private int age;
 	private String employeeAddress;
@@ -19,7 +20,7 @@ public class Staff {
 		super();
 		
 	}
-	public Staff(int id, int departmentId, String employeeName, long phoneNo, String email, int age,
+	public Staff(int id, int departmentId, String employeeName, String phoneNo, String email, int age,
 			String employeeAddress, int salary) {
 		super();
 		this.id = id;
@@ -49,10 +50,10 @@ public class Staff {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public long getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(long phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {
@@ -85,6 +86,7 @@ public class Staff {
 				+ phoneNo + ", email=" + email + ", age=" + age + ", employeeAddress=" + employeeAddress + ", salary="
 				+ salary + "]";
 	}
-
+	
+	
 	
 }
